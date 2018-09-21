@@ -1,0 +1,7 @@
+maze01: 20 linhas e 33 colunas
+	inicio = (1, 1)
+	fim = (19, 31)	
+
+maze02: 20 linhas e 33 colunas
+	inicio = (1, 1)
+	fim = (39, 61)	
