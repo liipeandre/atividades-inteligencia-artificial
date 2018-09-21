@@ -1,15 +1,10 @@
-from outros.operacoes_problema import *
+from trabalho02.outros.operacoes_problema import *
 
 def busca_a_estrela(grafo: MultiDiGraph):
     nodo = grafo.graph["estado_inicial"]      # seto o nodo inicial como o estado inicial
     inserir_nodo_grafo(grafo, 1, None, nodo)  # adiciona o nodo inicial no grafo
-    return busca_a_estrela_rec(grafo, nodo)      # chamo a parte recursiva do algoritmo
 
-def busca_a_estrela_rec(grafo: MultiDiGraph, nodo: dict):
-    nodo = grafo.graph["estado_inicial"]      # seto o nodo inicial como o estado inicial
-    inserir_nodo_grafo(grafo, 1, None, nodo)  # adiciona o nodo inicial no grafo
-
-    if teste_objetivo(nodo):            # testo se esse estado é o final (teste objetivo)
+    if teste_objetivo(grafo, nodo):            # testo se esse estado é o final (teste objetivo)
         return solucao(grafo, nodo)     # se verdadeiro, retorno o caminho (solucao)
 
     borda = [nodo]   # borda eh uma FILA ORDENADA de nodos a serem explorados
@@ -20,7 +15,7 @@ def busca_a_estrela_rec(grafo: MultiDiGraph, nodo: dict):
             return []
 
         for nodo in borda.copy():
-            nodo["custo_caminho"] += calcular_heuristica(nodo) # faço o custo do caminho ser o da heurística
+            nodo["custo_caminho"] += calcular_heuristica(grafo, nodo) # faço o custo do caminho ser o da heurística + custo do caminho
 
         borda.sort(key=lambda x: x["custo_caminho"])  # ordeno a borda pelo custo do caminho
         nodo = borda.pop(0)     # removo o elemento da borda (menor custo)
@@ -31,7 +26,7 @@ def busca_a_estrela_rec(grafo: MultiDiGraph, nodo: dict):
         for nodo_novo in nodos_filhos:   # para cada um dos novos nodos
             if nao_borda_e_nao_explorado(nodo_novo, borda, explorado):   # se nao estiver em borda e nem em explorado
 
-                if teste_objetivo(nodo_novo):           # testo se esse estado é o final (teste objetivo)
+                if teste_objetivo(grafo, nodo_novo):           # testo se esse estado é o final (teste objetivo)
                     return solucao(grafo, nodo_novo)    # se verdadeiro, retorno o caminho (solucao)
 
                 borda.append(nodo_novo)                 # se falso, adiciono o nodo na borda para ser explorado futuramente

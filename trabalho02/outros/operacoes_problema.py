@@ -1,5 +1,5 @@
 from networkx import MultiDiGraph
-from outros.operacoes_grafo import *
+from trabalho02.outros.operacoes_grafo import *
 from math import sqrt
 
 def carregar_labirinto(nome_arquivo):
@@ -11,14 +11,15 @@ def carregar_labirinto(nome_arquivo):
                 "1" + linha.replace("-", "1")\
                            .replace("+", "1")\
                            .replace("|", "1")\
-                           .replace("E", "P")\
+                           .replace("E", " ")\
                            .replace("S", " ")\
                            .replace("\n", "1")))
     return labirinto
 
-def teste_objetivo(nodo: dict):
+def teste_objetivo(grafo: MultiDiGraph, nodo: dict):
     ''' Teste se o objetivo foi atingido '''
-    return nodo["posicao_labirinto"]["x"] == 61 and nodo["posicao_labirinto"]["y"] == 41
+    return nodo["posicao_labirinto"]["x"] == grafo.graph["estado_final"]["posicao_final"]["x"] and \
+           nodo["posicao_labirinto"]["y"] == grafo.graph["estado_final"]["posicao_final"]["y"]
 
 def mover_cima(nodo: dict):
     # extraindo a posicao atual no labirinto
@@ -26,27 +27,11 @@ def mover_cima(nodo: dict):
     y = nodo["posicao_labirinto"]["y"]
 
     # crio um novo estado
-    nodo_novo = {"estado_labirinto": nodo["estado_labirinto"].copy(), \
-                 "posicao_labirinto": {"x": x, "y": y}, \
+    nodo_novo = {"posicao_labirinto": {"x": x - 1, "y": y}, \
                  "chave": 1, \
                  "acao": "Mover Cima", \
                  "custo_caminho": 1}
-
-    # extraindo a posicao atual no labirinto
-    x = nodo_novo["posicao_labirinto"]["x"]
-    y = nodo_novo["posicao_labirinto"]["y"]
-
-    # se a casa que quero ir for parede (1), a acao é invalida.
-    if x <= 0 or nodo_novo["estado_labirinto"][x - 1][y] == "1":
-        return "invalido"
-    else:
-        # faço a troca do conteudo das duas casas
-        nodo_novo["estado_labirinto"][x - 1][y], nodo_novo["estado_labirinto"][x][y] = \
-        nodo_novo["estado_labirinto"][x][y],     nodo_novo["estado_labirinto"][x - 1][y]
-
-        # atualizo a posicao atual.
-        nodo_novo["posicao_labirinto"]["x"] -= 1
-        return nodo_novo
+    return nodo_novo
 
 def mover_baixo(nodo: dict):
     # extraindo a posicao atual no labirinto
@@ -54,28 +39,11 @@ def mover_baixo(nodo: dict):
     y = nodo["posicao_labirinto"]["y"]
 
     # crio um novo estado
-    nodo_novo = {"estado_labirinto": nodo["estado_labirinto"].copy(), \
-                 "posicao_labirinto": {"x": x, "y": y}, \
+    nodo_novo = {"posicao_labirinto": {"x": x + 1, "y": y}, \
                  "chave": 1, \
                  "acao": "Mover Baixo", \
                  "custo_caminho": 1}
-
-    # extraindo a posicao atual no labirinto
-    x = nodo_novo["posicao_labirinto"]["x"]
-    y = nodo_novo["posicao_labirinto"]["y"]
-
-    # se a casa que quero ir for parede (1), a acao é invalida.
-    if x >= len(nodo_novo["estado_labirinto"]) - 1 or nodo_novo["estado_labirinto"][x + 1][y] == "1":
-        return "invalido"
-    else:
-        # faço a troca do conteudo das duas casas
-        nodo_novo["estado_labirinto"][x + 1][y], nodo_novo["estado_labirinto"][x][y] = \
-        nodo_novo["estado_labirinto"][x][y],     nodo_novo["estado_labirinto"][x + 1][y]
-
-        # atualizo a posicao atual.
-        nodo_novo["posicao_labirinto"]["x"] += 1
-
-        return nodo_novo
+    return nodo_novo
 
 def mover_esquerda(nodo: dict):
     # extraindo a posicao atual no labirinto
@@ -83,28 +51,11 @@ def mover_esquerda(nodo: dict):
     y = nodo["posicao_labirinto"]["y"]
 
     # crio um novo estado
-    nodo_novo = {"estado_labirinto": nodo["estado_labirinto"].copy(), \
-                 "posicao_labirinto": {"x": x, "y": y}, \
+    nodo_novo = {"posicao_labirinto": {"x": x, "y": y - 1}, \
                  "chave": 1, \
                  "acao": "Mover Esquerda", \
                  "custo_caminho": 1}
-
-    # extraindo a posicao atual no labirinto
-    x = nodo_novo["posicao_labirinto"]["x"]
-    y = nodo_novo["posicao_labirinto"]["y"]
-
-    # se a casa que quero ir for parede (1), a acao é invalida.
-    if y <= 0 or nodo_novo["estado_labirinto"][x][y - 1] == "1":
-        return "invalido"
-    else:
-        # faço a troca do conteudo das duas casas
-        nodo_novo["estado_labirinto"][x][y - 1], nodo_novo["estado_labirinto"][x][y] = \
-        nodo_novo["estado_labirinto"][x][y],     nodo_novo["estado_labirinto"][x][y - 1]
-
-        # atualizo a posicao atual.
-        nodo_novo["posicao_labirinto"]["y"] -= 1
-
-        return nodo_novo
+    return nodo_novo
 
 def mover_direita(nodo: dict):
     # extraindo a posicao atual no labirinto
@@ -112,28 +63,11 @@ def mover_direita(nodo: dict):
     y = nodo["posicao_labirinto"]["y"]
 
     # crio um novo estado
-    nodo_novo = {"estado_labirinto": nodo["estado_labirinto"].copy(), \
-                 "posicao_labirinto": {"x": x, "y": y}, \
+    nodo_novo = {"posicao_labirinto": {"x": x, "y": y + 1}, \
                  "chave": 1, \
                  "acao": "Mover Direita", \
                  "custo_caminho": 1}
-
-    # extraindo a posicao atual no labirinto
-    x = nodo_novo["posicao_labirinto"]["x"]
-    y = nodo_novo["posicao_labirinto"]["y"]
-
-    # se a casa que quero ir for parede (1), a acao é invalida.
-    if y >= len(nodo_novo["estado_labirinto"][x]) - 1 or nodo_novo["estado_labirinto"][x][y + 1] == "1":
-        return "invalido"
-    else:
-        # faço a troca do conteudo das duas casas
-        nodo_novo["estado_labirinto"][x][y + 1], nodo_novo["estado_labirinto"][x][y] = \
-        nodo_novo["estado_labirinto"][x][y],     nodo_novo["estado_labirinto"][x][y + 1]
-
-        # atualizo a posicao atual.
-        nodo_novo["posicao_labirinto"]["y"] += 1
-
-        return nodo_novo
+    return nodo_novo
 
 def acoes(grafo: MultiDiGraph, chave: int, nodo: dict):
     ''' Aplica todas as ações para o nodo e verifica se as ações são válidas, além de inseri-los no grafo '''
@@ -143,7 +77,7 @@ def acoes(grafo: MultiDiGraph, chave: int, nodo: dict):
                                                   mover_baixo(nodo), \
                                                   mover_esquerda(nodo), \
                                                   mover_direita(nodo)]\
-                    if estado_valido(nodo_filho)]
+                    if estado_valido(grafo, nodo_filho)]
 
     # insiro-os no grafo
     for nodo_novo in nodos_filhos:
@@ -154,11 +88,18 @@ def acoes(grafo: MultiDiGraph, chave: int, nodo: dict):
     # retorno os que restaram
     return nodos_filhos, chave
 
-def estado_valido(nodo: dict):
+def estado_valido(grafo: MultiDiGraph, nodo: dict):
     ''' Verifica se o estado é válido '''
+    # extraindo a posicao atual no labirinto
+    x = nodo["posicao_labirinto"]["x"]
+    y = nodo["posicao_labirinto"]["y"]
 
-    # se ele ja vier invalido, continua invalido
-    if nodo == "invalido":
+    # se as coordenadas estão fora do alcance do labirinto ou se a casa é parede, o estado inválido
+    max_linhas = len(grafo.graph["estado_inicial"]["labirinto"])
+    max_colunas = len(grafo.graph["estado_inicial"]["labirinto"][x])
+    if x < 0 or x >= max_linhas or \
+         y < 0 or y >= max_colunas or \
+         grafo.graph["estado_inicial"]["labirinto"][x][y] == "1":
         return False
     return True
 
@@ -166,7 +107,7 @@ def solucao(grafo: MultiDiGraph, nodo: dict):
     ''' Faz o backtracking do nodo final até o nodo inicial '''
     caminho = []        # caminho percorrido até aqui
     nodo_atual = nodo   # nodo atual
-    while nodo_atual != grafo.graph["estado_inicial"]:  # enquanto o nodo não for o nodo inicial
+    while nodo_atual["posicao_labirinto"] != grafo.graph["estado_inicial"]["posicao_labirinto"]:  # enquanto o nodo não for o nodo inicial
         caminho += [nodo_atual]                                             # adiciono o nodo em caminho
         pai = [pai for pai in grafo.predecessors(nodo_atual["chave"])]      # busco o pai no grafo
         nodo_atual = grafo.nodes[pai[0]]    # nodo atual se torna o pai
@@ -176,9 +117,9 @@ def solucao(grafo: MultiDiGraph, nodo: dict):
     caminho.append(nodo_atual)              # no final, adiciono o nodo inicial.
     return caminho                          # retorno o caminho
 
-def calcular_heuristica(nodo: dict):
+def calcular_heuristica(grafo:MultiDiGraph, nodo: dict):
     x = nodo["posicao_labirinto"]["x"]
     y = nodo["posicao_labirinto"]["y"]
 
     # aplicando heurística
-    return abs(61 - x) + abs(41 - y)
+    return abs(grafo.graph["estado_final"]["posicao_final"]["x"] - x) + abs(grafo.graph["estado_final"]["posicao_final"]["y"] - y)

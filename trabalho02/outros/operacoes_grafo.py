@@ -11,7 +11,6 @@ def nao_borda_e_nao_explorado(nodo_novo, borda, explorado):
 
 def inserir_nodo_grafo(grafo: MultiDiGraph, chave: int, nodo: dict, nodo_novo: dict):
     grafo.add_node(chave,\
-                   estado_labirinto=nodo_novo["estado_labirinto"],\
                    posicao_labirinto=nodo_novo["posicao_labirinto"],\
                    chave=chave,\
                    acao=nodo_novo["acao"],\
@@ -22,13 +21,12 @@ def inserir_nodo_grafo(grafo: MultiDiGraph, chave: int, nodo: dict, nodo_novo: d
 
 
 def comparar_nodos(nodo1:dict, nodo2: dict):
-    ''' Compara dois nodos pelas pilhas SOMENTE'''
-    return nodo1["estado_labirinto"] == nodo2["estado_labirinto"] and \
-           nodo1["posicao_labirinto"] == nodo2["posicao_labirinto"]
+    ''' Compara dois nodos pelas posicoes SOMENTE'''
+    return nodo1["posicao_labirinto"] == nodo2["posicao_labirinto"]
 
 def imprime_caminho(caminho):
     ''' Imprime o caminho em tela '''
     contador = 1
     for item in list(reversed(caminho)):
-        print(f'{str(contador):4s} = Estado do Labirinto: {str(item["estado_labirinto"]):4s} \n Acao: {item["acao"]} \n\n')
+        print(f'{str(contador):4s}= Posicao no Labirinto: {str(item["posicao_labirinto"]):10s}   Acao: {item["acao"]}')
         contador += 1
