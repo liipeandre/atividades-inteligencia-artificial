@@ -30,7 +30,7 @@ def mover_cima(nodo: dict):
     nodo_novo = {"posicao_labirinto": {"x": x - 1, "y": y}, \
                  "chave": 1, \
                  "acao": "Mover Cima", \
-                 "custo_caminho": 1}
+                 "custo_caminho": 1 + nodo["custo_caminho"]}
     return nodo_novo
 
 def mover_baixo(nodo: dict):
@@ -42,7 +42,7 @@ def mover_baixo(nodo: dict):
     nodo_novo = {"posicao_labirinto": {"x": x + 1, "y": y}, \
                  "chave": 1, \
                  "acao": "Mover Baixo", \
-                 "custo_caminho": 1}
+                 "custo_caminho": 1 + nodo["custo_caminho"]}
     return nodo_novo
 
 def mover_esquerda(nodo: dict):
@@ -54,7 +54,7 @@ def mover_esquerda(nodo: dict):
     nodo_novo = {"posicao_labirinto": {"x": x, "y": y - 1}, \
                  "chave": 1, \
                  "acao": "Mover Esquerda", \
-                 "custo_caminho": 1}
+                 "custo_caminho": 1 + nodo["custo_caminho"]}
     return nodo_novo
 
 def mover_direita(nodo: dict):
@@ -66,7 +66,7 @@ def mover_direita(nodo: dict):
     nodo_novo = {"posicao_labirinto": {"x": x, "y": y + 1}, \
                  "chave": 1, \
                  "acao": "Mover Direita", \
-                 "custo_caminho": 1}
+                 "custo_caminho": 1 + nodo["custo_caminho"]}
     return nodo_novo
 
 def acoes(grafo: MultiDiGraph, chave: int, nodo: dict):

@@ -26,7 +26,7 @@ def AtoC(nodo: dict):
                  "B": nodo["B"].copy(),\
                  "C": nodo["C"].copy(),\
                  "acao": "Remocao de A para colocar em C",\
-                 "custo_caminho": 1}   # defino um novo nodo
+                 "custo_caminho": 1 + nodo["custo_caminho"]}   # defino um novo nodo
 
     if novo_nodo["A"]:                       # se pilha não vazia
         elemento = novo_nodo["A"].pop(0)     # removo o elemento do topo da pilha A
@@ -40,7 +40,7 @@ def BtoA(nodo: dict):
                  "B": nodo["B"].copy(),\
                  "C": nodo["C"].copy(),\
                  "acao": "Remocao de B para colocar em A", \
-                 "custo_caminho": 1}   # defino um novo nodo
+                 "custo_caminho": 1 + nodo["custo_caminho"]}   # defino um novo nodo
 
     if novo_nodo["B"]:                       # se pilha não vazia
         elemento = novo_nodo["B"].pop(0)     # removo o elemento do topo da pilha B
@@ -54,7 +54,7 @@ def BtoC(nodo: dict):
                  "B": nodo["B"].copy(),\
                  "C": nodo["C"].copy(),\
                  "acao": "Remocao de B para colocar em C", \
-                 "custo_caminho": 1}   # defino um novo nodo
+                 "custo_caminho": 1 + nodo["custo_caminho"]}   # defino um novo nodo
 
     if novo_nodo["B"]:                       # se pilha não vazia
         elemento = novo_nodo["B"].pop(0)     # removo o elemento do topo da pilha B
@@ -68,7 +68,7 @@ def CtoA(nodo: dict):
                  "B": nodo["B"].copy(),\
                  "C": nodo["C"].copy(),\
                  "acao": "Remocao de C para colocar em A", \
-                 "custo_caminho": 1}   # defino um novo nodo
+                 "custo_caminho": 1 + nodo["custo_caminho"]}   # defino um novo nodo
 
     if novo_nodo["C"]:                       # se pilha não vazia
         elemento = novo_nodo["C"].pop(0)     # removo o elemento do topo da pilha C
@@ -82,7 +82,7 @@ def CtoB(nodo: dict):
                  "B": nodo["B"].copy(),\
                  "C": nodo["C"].copy(),\
                  "acao": "Remocao de C para colocar em B", \
-                 "custo_caminho": 1}   # defino um novo nodo
+                 "custo_caminho": 1 + nodo["custo_caminho"]}   # defino um novo nodo
 
     if novo_nodo["C"]:                       # se pilha não vazia
         elemento = novo_nodo["C"].pop(0)     # removo o elemento do topo da pilha C

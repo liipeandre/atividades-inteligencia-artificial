@@ -13,15 +13,9 @@ def main():
                                          "posicao_labirinto": {"x": 1, "y": 1},\
                                          "chave": 1,\
                                          "acao": "Estado Inicial", \
-                                         "custo_caminho": 1},\
+                                         "custo_caminho": 0},\
                          estado_final = {"posicao_final": {"x": 19, "y": 31}})
 
-    '''
-    contador = 0
-    for item in estado_inicial:
-        print(str(contador) + "   " + str(len(item)) + "   " + "   " + str(item))
-        contador += 1
-    '''
     # aplico o algoritmo de busca (escolher um deles).
     caminho = busca_gulosa(grafo)
     #caminho = busca_a_estrela(grafo)
