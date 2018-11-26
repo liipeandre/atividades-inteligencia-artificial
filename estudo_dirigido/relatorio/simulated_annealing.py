@@ -7,16 +7,16 @@ from estudo_dirigido.codigo.controle_parada import *
 def atualiza_temperatura():
     ControleParada.temperatura_atual -= 1
 
-def simulated_annealing(temperatura_inicial, solucao_inicial):
+def simulated_annealing(temperatura_inicial):
     # escolher uma solução inicial e uma global(que será a atual), existentes no espaço de busca, dada uma regra definida.
-    solucao_atual : Solucao = solucao_inicial
-    melhor_solucao : Solucao = solucao_atual
+    solucao_atual  = solucao_inicial()
+    melhor_solucao = solucao_atual
 
     # defino a temperatura inicial
-    ControleParada.temperatura_atual = temperatura_inicial
+    temperatura_atual = temperatura_inicial
 
     # enquanto não atingo a condição de parada.
-    while not ControleParada.condicao_parada_simulated(ControleParada, solucao_atual):
+    while not condicao_parada(solucao_atual):
 
         # seleciona os vizinhos melhores que a solucao_atual.
         for vizinho in solucao_atual.vizinhanca():
@@ -33,9 +33,16 @@ def simulated_annealing(temperatura_inicial, solucao_inicial):
             # quanto maior a temperatura, maior a chance dele escolher uma solução ruim como solução atual.
             # isso serve para realizar a busca em seus vizinhos, para "pular" os mínimos/máximos locais,
             # visando atingir o mínimo/máximo global.
-            elif exp((solucao_atual - vizinho) / ControleParada.temperatura_atual) > random():
+            elif exp((solucao_atual - vizinho) / temperatura_atual) > random():
                 solucao_atual = vizinho
 
         # calcula a temperatura
-        atualiza_temperatura()
+        atualiza_temperatura(temperatura_atual)
     return melhor_solucao
+	
+	
+	
+	
+	
+	
+	
