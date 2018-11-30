@@ -13,7 +13,7 @@ def main():
     tempo_execucao_tabu = process_time() - tempo_inicial_tabu
 
     tempo_inicial_simulated = process_time()
-    melhor_solucao_simulated: Solucao = simulated_annealing(5000, solucao)
+    melhor_solucao_simulated: Solucao = simulated_annealing(-5000, solucao)
     tempo_execucao_simulated = process_time() - tempo_inicial_simulated
 
     # grava em arquivo, os testes realizados

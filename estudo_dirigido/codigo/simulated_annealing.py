@@ -5,7 +5,7 @@ from estudo_dirigido.codigo.problema_mochila import *
 from estudo_dirigido.codigo.controle_parada import *
 
 def atualiza_temperatura():
-    ControleParada.temperatura_atual -= 1
+    ControleParada.temperatura_atual += 1
 
 def simulated_annealing(temperatura_inicial, solucao_inicial):
     # escolher uma solução inicial e uma global(que será a atual), existentes no espaço de busca, dada uma regra definida.
@@ -33,7 +33,8 @@ def simulated_annealing(temperatura_inicial, solucao_inicial):
             # quanto maior a temperatura, maior a chance dele escolher uma solução ruim como solução atual.
             # isso serve para realizar a busca em seus vizinhos, para "pular" os mínimos/máximos locais,
             # visando atingir o mínimo/máximo global.
-            elif exp((solucao_atual - vizinho) / ControleParada.temperatura_atual) > random():
+			
+            elif exp((solucao_atual - vizinho) / (ControleParada.temperatura_atual if ControleParada.temperatura_atual != 0 else -0.1)) > random():
                 solucao_atual = vizinho
 
         # calcula a temperatura
