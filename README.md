@@ -10,5 +10,6 @@ de Bacharelado em Ciência da Computação da Universidade Tuiuti do Paraná.
 ## Descrição
 
 Este repositório possui os seguintes algoritmos:
-	Busca em largura, em profundidade e de custo uniforme voltados para a resolução do problema da torre de hanoi.
-	Busca A* e gulosa para o problema do labirinto. 
+
+- Busca em largura, em profundidade e de custo uniforme voltados para a resolução do problema da torre de hanoi.
+- Busca A* e gulosa para o problema do labirinto. 
