@@ -1,16 +1,16 @@
-# Inteligência Artificial
+# Artificial Intelligence Activities
 
-Trabalhos desenvolvidos para a disciplina de Inteligência Artificial do curso
-de Ciência da Computação da Universidade Tuiuti do Paraná.
+Works developed for Artificial Intelligence course
+of Computer Science course at Tuiuti University of Paraná.
 
-## Autor
+## Author
 
 - André Felipe Pereira dos Santos
 
-## Descrição
+## Description
 
-Este repositório possui os seguintes algoritmos:
+This repository has the following algorithms:
 
-- Busca em largura, em profundidade e de custo uniforme voltados para a resolução do problema da torre de hanoi.
-- Busca A* e gulosa para o problema do labirinto.
-- Tabu search e simulated annealing, aplicados ao problema da mochila (knapsack problem).
+- Breadth-First Search, Depth-First Search and Uniform-Cost Search applied at solving the Hanoi Tower Problem.
+- A* search and Greedy Search, applied at solving the Maze Problem.
+- Tabu Search and Simulated Annealing, applied at solving the Knapsack Problem.
